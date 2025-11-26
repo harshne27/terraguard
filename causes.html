@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Causes and Effects of Landslides</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-brand">🏔️ TerraGuard</a>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="causes.html" class="active">Causes & Effects</a></li>
+                <li><a href="casestudies.html">Case Studies</a></li>
+                <li><a href="riskzones-standalone.html">Risk Zones</a></li>
+                <li><a href="prevention.html">Prevention</a></li>
+                <li><a href="emergency.html">Emergency</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="hero">
+            <h1>Causes and Effects</h1>
+            <p>Understanding What Triggers Landslides and Their Impacts</p>
+        </div>
+
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a> / <span>Causes & Effects</span>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+                <section>
+                    <h2>Natural Causes</h2>
+                    <ul style="margin-left: 1.5rem; line-height: 2;">
+                        <li><strong>Heavy Rainfall:</strong> Most common trigger; saturation reduces soil strength</li>
+                        <li><strong>Earthquakes:</strong> Seismic vibrations can destabilize slopes</li>
+                        <li><strong>Weak Rock Formations:</strong> Poor geological structures prone to failure</li>
+                        <li><strong>River Erosion:</strong> Undercutting of slopes by water</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Anthropogenic Causes</h2>
+                    <ul style="margin-left: 1.5rem; line-height: 2;">
+                        <li><strong>Deforestation:</strong> Loss of vegetation reduces slope stability</li>
+                        <li><strong>Unplanned Construction:</strong> Poor building practices on slopes</li>
+                        <li><strong>Road Cutting:</strong> Destabilizes slope geometry</li>
+                        <li><strong>Mining Activities:</strong> Alters slope structure and stability</li>
+                    </ul>
+                </section>
+            </div>
+
+            <section>
+                <h3>Impact Levels of Different Causes</h3>
+                <canvas id="causesChart" style="max-width: 600px; margin: 1rem auto; display: block;"></canvas>
+            </section>
+
+            <section>
+    <h2 style="margin-top: 2rem;">Effects of Landslides</h2>
+
+    <!-- Human Impact -->
+    <div class="accordion-item">
+        <div class="accordion-header">👥 Human Impact & Casualties</div>
+        <span class="arrrow"></span>
+        <div class="accordion-content">
+            <p>Landslides cause direct loss of life through immediate impact and burial under debris. Survivors face injuries and trauma. Displacement from affected areas disrupts lives and livelihoods. The 2024 Wayanad disaster resulted in 400+ deaths with hundreds still missing.</p>
+        </div>
+    </div>
+
+    <!-- Infrastructure Damage -->
+    <div class="accordion-item">
+        <div class="accordion-header">🏢 Infrastructure Damage</div>
+        <span class="arrrow"></span>
+        <div class="accordion-content">
+            <p>Roads, bridges, and railways are destroyed or become impassable. Communication networks are disrupted. Water and electricity supply systems are damaged. Buildings are destroyed or rendered uninhabitable. Recovery of infrastructure requires significant time and resources.</p>
+        </div>
+    </div>
+
+    <!-- Economic Losses -->
+    <div class="accordion-item">
+        <div class="accordion-header">💰 Economic Losses</div>
+        <span class="arrrow"></span>
+        <div class="accordion-content">
+            <p>Property damage runs into billions of rupees annually. Agricultural land is destroyed, affecting farmer income. Tourism and commercial activities cease in affected areas. Government spending on relief, rescue, and reconstruction strains budgets.</p>
+        </div>
+    </div>
+
+    <!-- Environmental Impact -->
+    <div class="accordion-item">
+        <div class="accordion-header">🌍 Environmental Impact</div>
+        <span class="arrrow"></span>
+        <div class="accordion-content">
+            <p>Soil erosion accelerates in affected regions. Forest cover is destroyed, causing long-term ecological damage. Rivers are blocked by debris, altering water flow and aquatic ecosystems. Biodiversity is reduced. Environmental recovery takes years or decades.</p>
+        </div>
+    </div>
+
+</section>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="about.html">About Landslides</a></li>
+                    <li><a href="causes.html">Causes & Effects</a></li>
+                    <li><a href="riskzones-standalone.html">Risk Zones</a></li>
+                    <li><a href="prevention.html">Prevention</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="emergency.html">Emergency Guidelines</a></li>
+                    <li><a href="casestudies.html">Case Studies</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Organizations</h4>
+                <ul>
+                    <li><a href="https://ndma.gov.in" target="_blank">NDMA</a></li>
+                    <li><a href="https://nrsc.gov.in" target="_blank">NRSC</a></li>
+                    <li><a href="https://gsi.gov.in" target="_blank">GSI</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Landslides Project. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <div class="back-to-top">↑</div>
+    <script src="js/main.js"></script>
+  <script>
+    const causesCtx = document.getElementById('causesChart').getContext('2d');
+
+    new Chart(causesCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Heavy Rainfall', 'Road Cutting', 'Deforestation', 'Construction', 'Earthquakes', 'Mining'],
+            datasets: [{
+                label: 'Impact Level',
+                data: [10, 9, 8, 7, 8, 6],
+                backgroundColor: ['#FF6B35', '#D32F2F', '#FF8C42', '#FFA500', '#8B6F47', '#2D5016']
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    max: 10,
+                    ticks: {
+                        color: '#ffffff'   // ← X-axis text color
+                    },
+                    grid: {
+                        color: 'rgba(255,255,255,0.3)'
+                    }
+                },
+                y: {
+                    ticks: {
+                        color: '#ffffff'   // ← LABEL TEXT COLOR (y-axis labels)
+                    },
+                    grid: {
+                        color: 'rgba(255,255,255,0.3)'
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+<script>
+document.querySelectorAll(".accordion-header").forEach(header => {
+    header.addEventListener("click", () => {
+        const item = header.parentElement;
+
+        // Toggle clicked item
+        item.classList.toggle("active");
+
+        // Close others
+        document.querySelectorAll(".accordion-item").forEach(other => {
+            if (other !== item) {
+                other.classList.remove("active");
+            }
+        });
+    });
+});
+</script>
+
+</body>
+</html>

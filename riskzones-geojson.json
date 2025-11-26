@@ -1,0 +1,168 @@
+{
+  "type": "FeatureCollection",
+  "timestamp": "2025-11-15T19:00:00Z",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Sikkim",
+        "state": "Sikkim",
+        "risk_level": "very_high",
+        "susceptible_area": "57.6%",
+        "population_at_risk": "140,000+",
+        "description": "Extremely high seismic activity and steep terrain",
+        "recent_incidents": 45,
+        "last_major_event": "2023-09-18",
+        "alert_status": "active"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [88.5122, 27.5330]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Uttarakhand",
+        "state": "Uttarakhand",
+        "risk_level": "very_high",
+        "susceptible_area": "55-60%",
+        "population_at_risk": "500,000+",
+        "description": "Himalayan region with frequent monsoon landslides",
+        "recent_incidents": 120,
+        "last_major_event": "2024-08-15",
+        "alert_status": "warning"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [79.0193, 30.0668]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Himachal Pradesh",
+        "state": "Himachal Pradesh",
+        "risk_level": "very_high",
+        "susceptible_area": "50-55%",
+        "population_at_risk": "350,000+",
+        "description": "High altitude mountain region with unstable slopes",
+        "recent_incidents": 78,
+        "last_major_event": "2024-07-22",
+        "alert_status": "warning"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [77.1734, 31.1048]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kerala (Western Ghats)",
+        "state": "Kerala",
+        "risk_level": "high",
+        "susceptible_area": "35-40%",
+        "population_at_risk": "600,000+",
+        "description": "Heavy monsoon rainfall on steep Western Ghats slopes",
+        "recent_incidents": 92,
+        "last_major_event": "2024-07-30",
+        "alert_status": "active"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [76.2711, 10.8505]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Wayanad District",
+        "state": "Kerala",
+        "risk_level": "high",
+        "susceptible_area": "45%",
+        "population_at_risk": "150,000+",
+        "description": "Site of 2024 catastrophic landslide (400+ deaths)",
+        "recent_incidents": 15,
+        "last_major_event": "2024-07-30",
+        "alert_status": "critical"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [76.0823, 11.6854]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Meghalaya",
+        "state": "Meghalaya",
+        "risk_level": "high",
+        "susceptible_area": "40-45%",
+        "population_at_risk": "150,000+",
+        "description": "Wettest region in India with extreme rainfall",
+        "recent_incidents": 56,
+        "last_major_event": "2024-06-12",
+        "alert_status": "warning"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [91.3662, 25.4670]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Arunachal Pradesh",
+        "state": "Arunachal Pradesh",
+        "risk_level": "high",
+        "susceptible_area": "45-50%",
+        "population_at_risk": "200,000+",
+        "description": "Northeast Himalayan foothills with complex geology",
+        "recent_incidents": 34,
+        "last_major_event": "2024-05-18",
+        "alert_status": "normal"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [94.7278, 28.2180]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Assam",
+        "state": "Assam",
+        "risk_level": "medium",
+        "susceptible_area": "25-30%",
+        "population_at_risk": "300,000+",
+        "description": "Flood-prone river valleys with seasonal vulnerability",
+        "recent_incidents": 28,
+        "last_major_event": "2024-04-08",
+        "alert_status": "normal"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [92.9376, 26.2006]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Manipur",
+        "state": "Manipur",
+        "risk_level": "medium",
+        "susceptible_area": "28-32%",
+        "population_at_risk": "150,000+",
+        "description": "Hilly terrain with moderate monsoon impact",
+        "recent_incidents": 19,
+        "last_major_event": "2024-03-21",
+        "alert_status": "normal"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [93.9063, 24.6637]
+      }
+    }
+  ]
+}

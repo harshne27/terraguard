@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landslide Risk Zones - Real-Time Map</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        #risk-map {
+            height: 600px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin: 2rem 0;
+            z-index: 1;
+        }
+        .map-controls {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .map-controls button {
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            padding: 0.75rem 1.5rem;
+        }
+        .map-legend {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-top: 1rem;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 0.5rem 0;
+        }
+        .legend-color {
+            width: 30px;
+            height: 20px;
+            margin-right: 10px;
+            border-radius: 3px;
+            border: 1px solid #ddd;
+        }
+        .loading-spinner {
+            display: inline-block;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .status-bar {
+            background: #f0f0f0;
+            padding: 0.75rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            border-left: 4px solid #FF6B35;
+        }
+        .status-bar.success {
+            border-left-color: #4CAF50;
+        }
+        .status-bar.error {
+            border-left-color: #D32F2F;
+        }
+        @media (max-width: 768px) {
+            #risk-map { height: 400px; }
+            .map-controls button { display: block; width: 100%; margin-bottom: 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-brand">🏔️ TerraGuard</a>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="causes.html">Causes & Effects</a></li>
+                <li><a href="casestudies.html">Case Studies</a></li>
+                <li><a href="riskzones.html" class="active">Risk Zones</a></li>
+                <li><a href="prevention.html">Prevention</a></li>
+                <li><a href="emergency.html">Emergency</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="hero">
+            <h1>Landslide Risk Zones</h1>
+            <p>Interactive Risk Mapping Across India</p>
+        </div>
+
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a> / <span>Risk Zones with Map</span>
+            </div>
+
+            <!-- Status Bar -->
+            <div class="status-bar" id="statusBar">
+                <span id="statusText">Connecting to server...</span>
+            </div>
+
+            <!-- Interactive Real-Time Map Section -->
+            <section>
+                <h2>🗺️Landslide Risk Zone Map</h2>
+                <p>Interactive map showing real-time landslide risk zones across India. Click on any location for detailed information. Data updates automatically every 60 seconds.</p>
+                
+                <div class="map-controls">
+                    <button class="btn btn-secondary" onclick="focusRegion('himalayan')">🏔️ Himalayan Region</button>
+                    <button class="btn btn-secondary" onclick="focusRegion('westernghats')">🌴 Western Ghats</button>
+                    <button class="btn btn-secondary" onclick="focusRegion('northeast')">⛰️ Northeast India</button>
+                    <button class="btn btn-secondary" onclick="resetMapView()">🔄 Reset View</button>
+                    <button class="btn" onclick="refreshMapData()">📡 Refresh Now</button>
+                </div>
+
+                <div id="risk-map"></div>
+                
+                <div class="map-legend">
+                    <h4 style="color: black">Risk Level Legend</h4>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #D32F2F;"></div>
+                        <span style="color: black;"><strong >🔴 Very High Risk:</strong> Immediate threat zones (55-60% susceptible)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #FF6B35;"></div>
+                        <span style="color: black;"><strong>🟠 High Risk:</strong> Elevated hazard zones (35-50% susceptible)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #FFA500;"></div>
+                        <span style="color: black;"><strong>🟡 Medium Risk:</strong> Moderate hazard zones (25-35% susceptible)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #4CAF50;"></div>
+                        <span style="color: black;"><strong>🟢 Low Risk:</strong> Minimal hazard zones (&lt;15% susceptible)</span>
+                    </div>
+                </div>
+
+                <p style="margin-top: 1rem; font-size: 0.85rem; color: #666;">
+                    <strong>Data Sources:</strong> National Remote Sensing Centre (NRSC), Geological Survey of India (GSI), 
+                    National Disaster Management Authority (NDMA). Data Source Server: <span id="apiSource">localhost:5000</span>
+                </p>
+            </section>
+
+            <section>
+                <h2>Risk Zone Classification</h2>
+                <p>India has 12.6% of its total area susceptible to landslides. The vulnerability is highest in the Himalayan region, Western Ghats, and Northeast states.</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Risk Level</th>
+                            <th>States/Regions</th>
+                            <th>Susceptible Area (%)</th>
+                            <th>Characteristics</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong style="color: #D32F2F;">VERY HIGH</strong></td>
+                            <td>Sikkim, Uttarakhand, Himachal Pradesh</td>
+                            <td>55-60%</td>
+                            <td>Steep terrain, high rainfall, weak rocks</td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color: #FF6B35;">HIGH</strong></td>
+                            <td>Arunachal Pradesh, Meghalaya, Kerala</td>
+                            <td>35-50%</td>
+                            <td>Mountainous regions, monsoon areas</td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color: #FFC107;">MEDIUM</strong></td>
+                            <td>Assam, Nagaland, Manipur</td>
+                            <td>25-35%</td>
+                            <td>Mixed terrain, seasonal vulnerability</td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color: #4CAF50;">LOW</strong></td>
+                            <td>Plateaus, plains regions</td>
+                            <td>&lt;15%</td>
+                            <td>Gentle slopes, stable geology</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section>
+                <h2>District-Level Vulnerability (Top 10)</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>District</th>
+                            <th>State</th>
+                            <th>Risk Level</th>
+                            <th>Population at Risk</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td>Rudraprayag</td><td>Uttarakhand</td><td>Very High</td><td>200,000+</td></tr>
+                        <tr><td>2</td><td>Tehri Garhwal</td><td>Uttarakhand</td><td>Very High</td><td>180,000+</td></tr>
+                        <tr><td>3</td><td>Wayanad</td><td>Kerala</td><td>High</td><td>150,000+</td></tr>
+                        <tr><td>4</td><td>Idukki</td><td>Kerala</td><td>High</td><td>180,000+</td></tr>
+                        <tr><td>5</td><td>Sikkim</td><td>Sikkim</td><td>Very High</td><td>140,000+</td></tr>
+                        <tr><td>6</td><td>Shimla</td><td>Himachal Pradesh</td><td>Very High</td><td>120,000+</td></tr>
+                        <tr><td>7</td><td>Kangra</td><td>Himachal Pradesh</td><td>High</td><td>100,000+</td></tr>
+                        <tr><td>8</td><td>Meghalaya</td><td>Meghalaya</td><td>High</td><td>150,000+</td></tr>
+                        <tr><td>9</td><td>Arunachal Pradesh</td><td>Arunachal Pradesh</td><td>High</td><td>200,000+</td></tr>
+                        <tr><td>10</td><td>Assam</td><td>Assam</td><td>Medium</td><td>300,000+</td></tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="about.html">About Landslides</a></li>
+                    <li><a href="causes.html">Causes & Effects</a></li>
+                    <li><a href="riskzones.html">Risk Zones</a></li>
+                    <li><a href="prevention.html">Prevention</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="emergency.html">Emergency Guidelines</a></li>
+                    <li><a href="casestudies.html">Case Studies</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Organizations</h4>
+                <ul>
+                    <li><a href="https://ndma.gov.in" target="_blank">NDMA</a></li>
+                    <li><a href="https://nrsc.gov.in" target="_blank">NRSC</a></li>
+                    <li><a href="https://gsi.gov.in" target="_blank">GSI</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Landslides Project. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <div class="back-to-top">↑</div>
+    
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="main.js"></script>
+    
+    <script>
+        // COMPLETE FRONTEND + BACKEND INTEGRATION
+        // This script works STANDALONE - no external API calls needed
+        
+        // Configuration
+        const API_BASE_URL = 'http://localhost:5000/api';
+        const FALLBACK_DATA = true; // Use fallback data if API fails
+        
+        // Initialize the map
+        const map = L.map('risk-map').setView([22.5, 82.5], 5);
+        
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors',
+            maxZoom: 18
+        }).addTo(map);
+
+        // Risk zone colors
+        const riskColors = {
+            "very_high": "#D32F2F",
+            "high": "#FF6B35",
+            "medium": "#FFA500",
+            "low": "#4CAF50"
+        };
+
+        // Alert status icons
+        const alertIcons = {
+            "critical": "🔴",
+            "active": "🟠",
+            "warning": "🟡",
+            "normal": "🟢"
+        };
+
+        let currentMarkers = [];
+
+        // Get marker color
+        function getMarkerColor(riskLevel) {
+            return riskColors[riskLevel] || "#888";
+        }
+
+        // Clear markers
+        function clearMarkers() {
+            currentMarkers.forEach(marker => map.removeLayer(marker.marker));
+            currentMarkers = [];
+        }
+
+        // FALLBACK DATA (embedded for offline use)
+        const fallbackGeoJSON = {
+            "type": "FeatureCollection",
+            "features": [
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "Sikkim",
+                        "state": "Sikkim",
+                        "risk_level": "very_high",
+                        "susceptible_area": "57.6%",
+                        "population_at_risk": "140,000+",
+                        "description": "Extremely high seismic activity and steep terrain",
+                        "recent_incidents": 45,
+                        "last_major_event": "2023-09-18",
+                        "alert_status": "active"
+                    },
+                    "geometry": { "type": "Point", "coordinates": [88.5122, 27.5330] }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "Uttarakhand",
+                        "state": "Uttarakhand",
+                        "risk_level": "very_high",
+                        "susceptible_area": "55-60%",
+                        "population_at_risk": "500,000+",
+                        "description": "Himalayan region with frequent monsoon landslides",
+                        "recent_incidents": 120,
+                        "last_major_event": "2024-08-15",
+                        "alert_status": "warning"
+                    },
+                    "geometry": { "type": "Point", "coordinates": [79.0193, 30.0668] }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "Himachal Pradesh",
+                        "state": "Himachal Pradesh",
+                        "risk_level": "very_high",
+                        "susceptible_area": "50-55%",
+                        "population_at_risk": "350,000+",
+                        "description": "High altitude mountain region with unstable slopes",
+                        "recent_incidents": 78,
+                        "last_major_event": "2024-07-22",
+                        "alert_status": "warning"
+                    },
+                    "geometry": { "type": "Point", "coordinates": [77.1734, 31.1048] }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "Kerala (Western Ghats)",
+                        "state": "Kerala",
+                        "risk_level": "high",
+                        "susceptible_area": "35-40%",
+                        "population_at_risk": "600,000+",
+                        "description": "Heavy monsoon rainfall on steep Western Ghats slopes",
+                        "recent_incidents": 92,
+                        "last_major_event": "2024-07-30",
+                        "alert_status": "active"
+                    },
+                    "geometry": { "type": "Point", "coordinates": [76.2711, 10.8505] }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "Wayanad District",
+                        "state": "Kerala",
+                        "risk_level": "high",
+                        "susceptible_area": "45%",
+                        "population_at_risk": "150,000+",
+                        "description": "Site of 2024 catastrophic landslide (400+ deaths)",
+                        "recent_incidents": 15,
+                        "last_major_event": "2024-07-30",
+                        "alert_status": "critical"
+                    },
+                    "geometry": { "type": "Point", "coordinates": [76.0823, 11.6854] }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "Meghalaya",
+                        "state": "Meghalaya",
+                        "risk_level": "high",
+                        "susceptible_area": "40-45%",
+                        "population_at_risk": "150,000+",
+                        "description": "Wettest region in India with extreme rainfall",
+                        "recent_incidents": 56,
+                        "last_major_event": "2024-06-12",
+                        "alert_status": "warning"
+                    },
+                    "geometry": { "type": "Point", "coordinates": [91.3662, 25.4670] }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "Arunachal Pradesh",
+                        "state": "Arunachal Pradesh",
+                        "risk_level": "high",
+                        "susceptible_area": "45-50%",
+                        "population_at_risk": "200,000+",
+                        "description": "Northeast Himalayan foothills with complex geology",
+                        "recent_incidents": 34,
+                        "last_major_event": "2024-05-18",
+                        "alert_status": "normal"
+                    },
+                    "geometry": { "type": "Point", "coordinates": [94.7278, 28.2180] }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "Assam",
+                        "state": "Assam",
+                        "risk_level": "medium",
+                        "susceptible_area": "25-30%",
+                        "population_at_risk": "300,000+",
+                        "description": "Flood-prone river valleys with seasonal vulnerability",
+                        "recent_incidents": 28,
+                        "last_major_event": "2024-04-08",
+                        "alert_status": "normal"
+                    },
+                    "geometry": { "type": "Point", "coordinates": [92.9376, 26.2006] }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "Manipur",
+                        "state": "Manipur",
+                        "risk_level": "medium",
+                        "susceptible_area": "28-32%",
+                        "population_at_risk": "150,000+",
+                        "description": "Hilly terrain with moderate monsoon impact",
+                        "recent_incidents": 19,
+                        "last_major_event": "2024-03-21",
+                        "alert_status": "normal"
+                    },
+                    "geometry": { "type": "Point", "coordinates": [93.9063, 24.6637] }
+                }
+            ]
+        };
+
+        // Load risk zones from API or fallback
+        async function loadRiskZones() {
+            const statusBar = document.getElementById('statusBar');
+            const statusText = document.getElementById('statusText');
+            
+            try {
+                statusText.textContent = '⏳ Loading risk zone data...';
+                
+                const response = await fetch(`${API_BASE_URL}/landslides/riskzones/geojson`, {
+                    method: 'GET',
+                    timeout: 5000
+                });
+                
+                if (!response.ok) throw new Error('API request failed');
+                
+                const data = await response.json();
+                renderMapMarkers(data);
+                
+                statusBar.className = 'status-bar success';
+                statusText.textContent = `✅ Data loaded successfully (${data.features.length} zones) - Last updated: ${new Date().toLocaleTimeString()}`;
+                
+            } catch (error) {
+                console.error('API Error:', error);
+                
+                if (FALLBACK_DATA) {
+                    console.log('Using fallback data...');
+                    renderMapMarkers(fallbackGeoJSON);
+                    statusBar.className = 'status-bar';
+                    statusText.textContent = `⚠️ Using offline data (fallback). Live data unavailable. Last checked: ${new Date().toLocaleTimeString()}`;
+                } else {
+                    statusBar.className = 'status-bar error';
+                    statusText.textContent = '❌ Failed to load data. Please check if backend is running on http://localhost:5000';
+                }
+            }
+        }
+
+        // Render markers on map
+        function renderMapMarkers(data) {
+            clearMarkers();
+            
+            data.features.forEach(function(feature) {
+                const coords = feature.geometry.coordinates;
+                const props = feature.properties;
+                
+                const icon = L.divIcon({
+                    className: 'custom-marker',
+                    html: `<div style="background-color:${getMarkerColor(props.risk_level)};width:30px;height:30px;border-radius:50%;border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.4);position:relative;"><span style="position:absolute;top:-8px;right:-8px;font-size:14px;">${alertIcons[props.alert_status] || ''}</span></div>`,
+                    iconSize: [30, 30],
+                    iconAnchor: [15, 15]
+                });
+                
+                const marker = L.marker([coords[1], coords[0]], { icon: icon })
+                    .bindPopup(`
+                        <div style="min-width: 240px;">
+                            <h4 style="margin: 0 0 10px 0; color: ${getMarkerColor(props.risk_level)};">${props.name}</h4>
+                            <p style="margin: 5px 0;"><strong>Alert:</strong> ${alertIcons[props.alert_status]} ${props.alert_status.toUpperCase()}</p>
+                            <p style="margin: 5px 0;"><strong>Risk Level:</strong> ${props.risk_level.replace('_', ' ').toUpperCase()}</p>
+                            <p style="margin: 5px 0;"><strong>Susceptible Area:</strong> ${props.susceptible_area}</p>
+                            <p style="margin: 5px 0;"><strong>Population at Risk:</strong> ${props.population_at_risk}</p>
+                            <p style="margin: 5px 0;"><strong>Recent Incidents:</strong> ${props.recent_incidents}</p>
+                            <p style="margin: 5px 0;"><strong>Last Major Event:</strong> ${props.last_major_event}</p>
+                            <p style="margin: 5px 0; font-size: 0.85rem; color: #555;">${props.description}</p>
+                        </div>
+                    `)
+                    .addTo(map);
+                
+                currentMarkers.push({marker, region: props.name, coords});
+            });
+        }
+
+        // Region coordinates
+        const regionCoords = {
+            'himalayan': [30.5, 79.5, 7],
+            'westernghats': [11.5, 76.0, 7],
+            'northeast': [26.0, 93.0, 7]
+        };
+
+        // Focus on region
+        function focusRegion(region) {
+            const coords = regionCoords[region];
+            if (coords) map.setView([coords[0], coords[1]], coords[2]);
+        }
+
+        // Reset map
+        function resetMapView() {
+            map.setView([22.5, 82.5], 5);
+        }
+
+        // Refresh data
+        function refreshMapData() {
+            loadRiskZones();
+        }
+
+        // Auto-refresh every 60 seconds
+        setInterval(loadRiskZones, 60000);
+
+        // Add scale control
+        L.control.scale().addTo(map);
+
+        // Responsive map
+        window.addEventListener('resize', () => map.invalidateSize());
+
+        // Initial load
+        loadRiskZones();
+    </script>
+</body>
+</html>

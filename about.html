@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Landslides</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-brand">🏔️ TerraGuard</a>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html" class="active">About</a></li>
+                <li><a href="causes.html">Causes & Effects</a></li>
+                <li><a href="casestudies.html">Case Studies</a></li>
+                <li><a href="riskzones-standalone.html">Risk Zones</a></li>
+                <li><a href="prevention.html">Prevention</a></li>
+                <li><a href="emergency.html">Emergency</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="hero">
+            <h1>Understanding Landslides</h1>
+            <p>Types, Formation, and Mechanisms</p>
+        </div>
+
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a> / <span>About Landslides</span>
+            </div>
+
+            <section>
+                <h2>What is a Landslide?</h2>
+                <p>A landslide is the movement of rock, earth, or debris down a sloped section of land. Landslides occur when gravitational and other types of shear stresses within a slope exceed the shear strength of the materials that form the slope. They can be triggered by various factors, including rain, earthquakes, and volcanic activity, which make the slope unstable. Landslides can affect lives, property, infrastructure, and the environment, occurring in all 50 states and territories. For safety recommendations during and after a landslide, refer to the CDC.</p>
+            </section>
+
+            <section>
+                <h2>Types of Landslides</h2>
+                <div class="grid">
+                    <div class="card">
+                        <h3>Debris Flow (35%)</h3>
+                        <p>Fast-moving mass of loose soil, rocks, and vegetation. Often triggered by heavy rainfall. Extremely destructive due to high velocity.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Rotational Slide (20%)</h3>
+                        <p>Movement along a curved surface. The material rotates as it moves downslope. Common in areas with homogeneous soil or weak rock.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Translational Slide (18%)</h3>
+                        <p>Movement along a planar or nearly planar surface. Often follows weak geological layers like bedding planes.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Rock Fall (15%)</h3>
+                        <p>Rapid downslope movement of individual rocks or small groups. Caused by weathering, erosion, or vibrations.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Creep (8%)</h3>
+                        <p>Slow, continuous downslope movement of soil or rock. Often imperceptible, but causes long-term damage to structures.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Topple (4%)</h3>
+                        <p>Forward rotation of rock masses about a point or axis. Common on steep slopes with well-defined joint patterns.</p>
+                    </div>
+                </div>
+
+                <div style="margin: 2rem 0; background: white; padding: 2rem; border-radius: 8px;">
+                    <h3>Landslide Type Distribution</h3>
+                    <canvas id="typesChart" style="max-width: 400px; margin: 0 auto;"></canvas>
+                </div>
+            </section>
+
+            <section>
+                <h2>How Landslides Form</h2>
+                <p>Landslides occur when the stress acting on slope material exceeds its shear strength. This imbalance can result from:</p>
+                <ul style="margin-left: 1.5rem; margin-top: 1rem;">
+                    <li><strong>Increased stress:</strong> Additional weight from heavy rainfall, snow, or construction</li>
+                    <li><strong>Decreased strength:</strong> Weathering, erosion, or saturation of soil</li>
+                    <li><strong>External triggers:</strong> Earthquakes, vibrations, or sudden water level changes</li>
+                </ul>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="about.html">About Landslides</a></li>
+                    <li><a href="causes.html">Causes & Effects</a></li>
+                    <li><a href="riskzones-standalone.html">Risk Zones</a></li>
+                    <li><a href="prevention.html">Prevention</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="emergency.html">Emergency Guidelines</a></li>
+                    <li><a href="casestudies.html">Case Studies</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Organizations</h4>
+                <ul>
+                    <li><a href="https://ndma.gov.in" target="_blank">NDMA</a></li>
+                    <li><a href="https://nrsc.gov.in" target="_blank">NRSC</a></li>
+                    <li><a href="https://gsi.gov.in" target="_blank">GSI</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Landslides Project. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <div class="back-to-top">↑</div>
+    <script src="js/main.js"></script>
+    <script>
+        const typesCtx = document.getElementById('typesChart').getContext('2d');
+        new Chart(typesCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Debris Flow', 'Rotational Slide', 'Translational Slide', 'Rock Fall', 'Creep', 'Topple'],
+                datasets: [{
+                    data: [35, 20, 18, 15, 8, 4],
+                    backgroundColor: ['#FF6B35', '#8B6F47', '#2D5016', '#FF8C42', '#A1887F', '#4A7023']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { position: 'bottom' } }
+            }
+        });
+    </script>
+</body>
+</html>

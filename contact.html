@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact and Feedback</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-brand">🏔️ TerraGuard</a>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="causes.html">Causes & Effects</a></li>
+                <li><a href="casestudies.html">Case Studies</a></li>
+                <li><a href="riskzones-standalone.html">Risk Zones</a></li>
+                <li><a href="prevention.html">Prevention</a></li>
+                <li><a href="emergency.html">Emergency</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="hero">
+            <h1>Contact & Feedback</h1>
+            <p>Get in Touch or Share Your Experience</p>
+        </div>
+
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a> / <span>Contact & Feedback</span>
+            </div>
+
+            <section style="max-width: 800px; margin: 0 auto;">
+                <h2>Send Us a Message</h2>
+                <form id="contactForm" method="POST">
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Subject *</label>
+                        <select id="subject" name="subject" required>
+                            <option value="">Select a subject</option>
+                            <option value="inquiry">General Inquiry</option>
+                            <option value="report">Report a Landslide</option>
+                            <option value="feedback">Website Feedback</option>
+                            <option value="research">Research Question</option>
+                            <option value="emergency">Emergency Information</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message *</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+
+                    <div class="form-group" style="display: flex; gap: 1rem;">
+                        <button type="submit" class="btn">Submit</button>
+                        <button type="reset" class="btn btn-secondary">Clear</button>
+                    </div>
+                </form>
+            </section>
+
+            <section>
+                <h2 style="text-align: center; margin: 2rem 0;">Government Organizations</h2>
+                <div class="grid">
+                    <div class="card">
+                        <h3>🏛️ NDMA</h3>
+                        <p><strong>National Disaster Management Authority</strong></p>
+                        <p><strong>Role:</strong> Disaster policy and coordination</p>
+                        <p><strong>Address:</strong> NDMA, A-1, Safdarjung Enclave, New Delhi</p>
+                        <p><strong>Phone:</strong> 011-26701728 (Emergency)</p>
+                        <p><strong>Email:</strong> contact@ndma.gov.in</p>
+                        <p><strong>Website:</strong> <a href="https://ndma.gov.in" target="_blank">ndma.gov.in</a></p>
+                    </div>
+
+                    <div class="card">
+                        <h3>🛰️ NRSC</h3>
+                        <p><strong>National Remote Sensing Centre</strong></p>
+                        <p><strong>Role:</strong> Satellite monitoring and mapping</p>
+                        <p><strong>Address:</strong> NRSC, Department of Space, Hyderabad</p>
+                        <p><strong>Phone:</strong> 040-23884499</p>
+                        <p><strong>Website:</strong> <a href="https://nrsc.gov.in" target="_blank">nrsc.gov.in</a></p>
+                    </div>
+
+                    <div class="card">
+                        <h3>🪨 GSI</h3>
+                        <p><strong>Geological Survey of India</strong></p>
+                        <p><strong>Role:</strong> Geological assessment and mapping</p>
+                        <p><strong>Address:</strong> GSI Headquarters, Kolkata</p>
+                        <p><strong>Phone:</strong> 033-22864561</p>
+                        <p><strong>Website:</strong> <a href="https://gsi.gov.in" target="_blank">gsi.gov.in</a></p>
+                    </div>
+
+                    <div class="card">
+                        <h3>🆘 EMERGENCY HELPLINE</h3>
+                        <p><strong>National Disaster Helpline</strong></p>
+                        <p><strong>24/7 Available</strong></p>
+                        <p style="font-size: 1.5rem; font-weight: bold; color: #D32F2F;">1078</p>
+                        <p><strong>SMS Alerts:</strong> Available to registered users</p>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Frequently Asked Questions</h2>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">What should I do if I live in a high-risk landslide area?</div>
+                    <span class="arrow"></span>
+                    <div class="accordion-content">
+                        <p>If you live in a high-risk area, take these steps: (1) Create an evacuation plan, (2) Prepare an emergency kit, (3) Stay informed about weather alerts, (4) Know the warning signs of landslides, (5) Register with local disaster management authorities, (6) Participate in community preparedness programs.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">How can I report a landslide hazard?</div>
+                    <span class="arrow"></span>
+                    <div class="accordion-content">
+                        <p>You can report landslide hazards through: (1) NDMA Emergency: 011-26701728, (2) National Disaster Helpline: 1078, (3) Your local District Disaster Management Authority, (4) Contact your local block development officer or panchayat, (5) Use this website's contact form to report concerns.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">What are the main warning signs of an impending landslide?</div>
+                    <span class="arrow"></span>
+                    <div class="accordion-content">
+                        <p>Warning signs include: cracks in ground or buildings, tilting trees, water seeping from slopes, rocks or soil falling from hillsides, loud ground noises, ground bulging, and unusual animal behavior. If you notice these signs, evacuate immediately and contact authorities.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">How often do landslides occur in India?</div>
+                    <span class="arrow"></span>
+                    <div class="accordion-content">
+                        <p>India experiences 500-1000 landslides annually, mostly during the monsoon season (June-September). The frequency has increased in recent years due to climate change, deforestation, and unplanned development. High-risk states like Uttarakhand, Kerala, and Himachal Pradesh experience the most incidents.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">What should be in an emergency kit?</div>
+                    <span class="arrow"></span>
+                    <div class="accordion-content">
+                        <p>Essential items: water (1 liter per person daily, 3-day supply), non-perishable food, first aid kit, medications, flashlight, batteries, portable radio, important documents, cash, mobile charger, comfortable shoes, and protective gear (helmet, gloves). Keep it easily accessible.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section style="text-align: center; padding: 2rem 0;">
+                <h3 class="follow-title">Follow Us</h3>
+                <div style="display: flex; justify-content: center; gap: 2rem; margin: 1.5rem 0;">
+                    <a href="#" style="color: black; font-size: 1.5rem; text-decoration: none;">📘 Facebook</a>
+                    <a href="#" style="color: black; font-size: 1.5rem; text-decoration: none;">🐦 Twitter</a>
+                    <a href="#" style="color: black; font-size: 1.5rem; text-decoration: none;">💼 LinkedIn</a>
+                    <a href="#" style="color: black; font-size: 1.5rem; text-decoration: none;">📧 Email</a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="about.html">About Landslides</a></li>
+                    <li><a href="causes.html">Causes & Effects</a></li>
+                    <li><a href="riskzones-standalone.html">Risk Zones</a></li>
+                    <li><a href="prevention.html">Prevention</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="emergency.html">Emergency Guidelines</a></li>
+                    <li><a href="casestudies.html">Case Studies</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Organizations</h4>
+                <ul>
+                    <li><a href="https://ndma.gov.in" target="_blank">NDMA</a></li>
+                    <li><a href="https://nrsc.gov.in" target="_blank">NRSC</a></li>
+                    <li><a href="https://gsi.gov.in" target="_blank">GSI</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Landslides Project. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <div class="back-to-top">↑</div>
+    <script src="main.js"></script>
+</body>
+</html>
